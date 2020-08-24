@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {useTimer} from "./hooks/useTimer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () => {
+
+  const alertComplete = () => alert('timer completed');
+  const [seconds, restartTimer] = useTimer(
+      3, alertComplete, 1000
   );
-}
+
+  return (
+      <div>
+        <div>Seconds remaining: {seconds}</div>
+
+        <hr/>
+
+        <button type="button"
+                style={{padding: "8px"}}
+                onClick={restartTimer}
+        >
+          Restart Timer
+        </button>
+      </div>
+  )
+};
 
 export default App;
+
