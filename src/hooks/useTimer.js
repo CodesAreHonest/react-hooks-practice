@@ -6,6 +6,8 @@ import {useState, useEffect, useRef} from "react";
  * @param {int} initialSeconds
  * @param {function} callBack
  * @param {int} delayInMilliseconds
+ *
+ * @return {array}
  */
 const useTimer = (initialSeconds, callBack, delayInMilliseconds) => {
     const [seconds, setSeconds] = useState(initialSeconds);
@@ -15,15 +17,20 @@ const useTimer = (initialSeconds, callBack, delayInMilliseconds) => {
         let intervalId = setInterval(() => {
             setSeconds(previousSecond => {
 
-                if (previousSecond === 0) {
-                    clearInterval(intervalId);
-                    internalRef.current = null;
-                    callBack();
-                    return previousSecond;
+                if (internalRef.current) {
+                    if (previousSecond === 0) {
+                        clearInterval(intervalId);
+                        internalRef.current = null;
+                        callBack();
+                        return previousSecond;
+                    }
+
+                    return previousSecond - 1;
                 }
 
-                return previousSecond - 1;
+                return previousSecond;
             });
+
         }, delayInMilliseconds);
 
         internalRef.current = intervalId;
@@ -43,7 +50,6 @@ const useTimer = (initialSeconds, callBack, delayInMilliseconds) => {
 
     useEffect(() => {
         startCountdown();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
