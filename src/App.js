@@ -1,4 +1,5 @@
 import React from 'react';
+import RestartButton from "./component/RestartButton";
 import {useTimer} from "./hooks/useTimer";
 
 const App = () => {
@@ -10,16 +11,11 @@ const App = () => {
 
   return (
       <div>
-        <div>Seconds remaining: {seconds}</div>
+          <div>Seconds remaining: {seconds}</div>
 
-        <hr/>
+          <hr/>
 
-        <button type="button"
-                style={{padding: "8px"}}
-                onClick={restartTimer}
-        >
-          Restart Timer
-        </button>
+          <RestartButton onClick={restartTimer} seconds={seconds}/>
       </div>
   )
 };
